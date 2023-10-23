@@ -1,0 +1,4 @@
+baseURL = 'https://rogarmu8.github.io'
+languageCode = 'en-us'
+title = 'Rómulo García Mus'
+theme = 'LoveIt'
