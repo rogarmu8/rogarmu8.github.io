@@ -1,7 +1,8 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Categories - Category - Rómulo García Mus</title>
+        <title>Categories - Category - Rómulo García</title>
         <link>https://rogarmu8.github.io/categories/</link>
-        <description>Categories - Category - Rómulo García Mus</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><atom:link href="https://rogarmu8.github.io/categories/" rel="self" type="application/rss+xml" /></channel>
+        <description>Categories - Category - Rómulo García</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>rogarmu8@gmail.com (Rómulo García Mus)</managingEditor>
+            <webMaster>rogarmu8@gmail.com (Rómulo García Mus)</webMaster><atom:link href="https://rogarmu8.github.io/categories/" rel="self" type="application/rss+xml" /></channel>
 </rss>

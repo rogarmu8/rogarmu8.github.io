@@ -1,24 +1,17 @@
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>Rómulo García Mus</title>
+        <title>Rómulo García</title>
         <link>https://rogarmu8.github.io/</link>
-        <description>This is my cool site</description>
-        <generator>Hugo -- gohugo.io</generator><language>en-us</language><lastBuildDate>Mon, 23 Oct 2023 12:25:54 &#43;0200</lastBuildDate>
+        <description>Rómulo García Portfolio</description>
+        <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>rogarmu8@gmail.com (Rómulo García Mus)</managingEditor>
+            <webMaster>rogarmu8@gmail.com (Rómulo García Mus)</webMaster><lastBuildDate>Mon, 23 Oct 2023 12:25:54 &#43;0200</lastBuildDate>
             <atom:link href="https://rogarmu8.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
-    <title>Onesongaday</title>
+    <title>One Song A Day</title>
     <link>https://rogarmu8.github.io/posts/onesongaday/</link>
     <pubDate>Mon, 23 Oct 2023 12:25:54 &#43;0200</pubDate>
-    <author>Author</author>
+    <author>Rómulo García Mus</author>
     <guid>https://rogarmu8.github.io/posts/onesongaday/</guid>
-    <description><![CDATA[]]></description>
-</item>
-<item>
-    <title>First_post</title>
-    <link>https://rogarmu8.github.io/posts/first_post/</link>
-    <pubDate>Mon, 23 Oct 2023 12:18:11 &#43;0200</pubDate>
-    <author>Author</author>
-    <guid>https://rogarmu8.github.io/posts/first_post/</guid>
     <description><![CDATA[]]></description>
 </item>
 </channel>
