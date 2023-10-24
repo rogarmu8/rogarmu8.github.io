@@ -1,8 +1,8 @@
 ---
 weight: 2
 title: "E-Ink Google Calendar"
-date: 2020-11-05T15:58:26+08:00
-lastmod: 2020-11-05T15:58:26+08:00
+date: 2021-01-05T15:58:26+08:00
+lastmod: 2021-01-05T15:58:26+08:00
 draft: false
 author: "Rómulo García"
 description: ""

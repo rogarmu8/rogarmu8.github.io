@@ -34,7 +34,7 @@ Google Play Link ]]></description>
 <item>
     <title>E-Ink Google Calendar</title>
     <link>https://rogarmu8.github.io/posts/googlecalendar/</link>
-    <pubDate>Thu, 05 Nov 2020 15:58:26 &#43;0800</pubDate>
+    <pubDate>Tue, 05 Jan 2021 15:58:26 &#43;0800</pubDate>
     <author>Rómulo García</author>
     <guid>https://rogarmu8.github.io/posts/googlecalendar/</guid>
     <description><![CDATA[E-ink display that connects to your google calendar and retrieves the data from the next 6 days updating every 24 hours.
