@@ -34,6 +34,15 @@ Second assignment consisting of a basic 3D engine. The 3D engine is a tool to vi
 Google Play Link ]]></description>
 </item>
 <item>
+    <title>E-Ink Google Calendar</title>
+    <link>https://rogarmu8.github.io/posts/googlecalendar/</link>
+    <pubDate>Thu, 05 Nov 2020 15:58:26 &#43;0800</pubDate>
+    <author>Rómulo García</author>
+    <guid>https://rogarmu8.github.io/posts/googlecalendar/</guid>
+    <description><![CDATA[E-ink display that connects to your google calendar and retrieves the data from the next 6 days updating every 24 hours.
+Parts used: https://www.waveshare.com/wiki/E-Paper_ESP32_Driver_Board https://www.waveshare.com/product/7.5inch-e-paper.htm Explanation: We use google scripts to connect to our google calendar and retrieve the needed information. After doing such, from our esp32 we connect to the scripts application and retrieve the data from the html reponse. We give format to the response to have a better integrationwith the e-ink display.]]></description>
+</item>
+<item>
     <title>Clicky Code</title>
     <link>https://rogarmu8.github.io/posts/clickycode/</link>
     <pubDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</pubDate>

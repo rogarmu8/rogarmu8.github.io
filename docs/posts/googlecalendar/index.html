@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en-us">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="noodp" />
+        <title>E-Ink Google Calendar - Rómulo García</title><meta name="Description" content="Rómulo García Portfolio"><meta property="og:title" content="E-Ink Google Calendar" />
+<meta property="og:description" content="E-ink display that connects to your google calendar and retrieves the data from the next 6 days updating every 24 hours.
+Parts used: https://www.waveshare.com/wiki/E-Paper_ESP32_Driver_Board https://www.waveshare.com/product/7.5inch-e-paper.htm Explanation: We use google scripts to connect to our google calendar and retrieve the needed information. After doing such, from our esp32 we connect to the scripts application and retrieve the data from the html reponse. We give format to the response to have a better integrationwith the e-ink display." />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://rogarmu8.github.io/posts/googlecalendar/" /><meta property="og:image" content="https://rogarmu8.github.io/posts/googlecalendar/featured-image.jpg"/><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2020-11-05T15:58:26+08:00" />
+<meta property="article:modified_time" content="2020-11-05T15:58:26+08:00" /><meta property="og:site_name" content="Rómulo García" />
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://rogarmu8.github.io/posts/googlecalendar/featured-image.jpg"/>
+<meta name="twitter:title" content="E-Ink Google Calendar"/>
+<meta name="twitter:description" content="E-ink display that connects to your google calendar and retrieves the data from the next 6 days updating every 24 hours.
+Parts used: https://www.waveshare.com/wiki/E-Paper_ESP32_Driver_Board https://www.waveshare.com/product/7.5inch-e-paper.htm Explanation: We use google scripts to connect to our google calendar and retrieve the needed information. After doing such, from our esp32 we connect to the scripts application and retrieve the data from the html reponse. We give format to the response to have a better integrationwith the e-ink display."/>
+<meta name="application-name" content="Rómulo García">
+<meta name="apple-mobile-web-app-title" content="Rómulo García"><meta name="theme-color" content="#ffffff"><meta name="msapplication-TileColor" content="#da532c"><link rel="shortcut icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png"><link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png"><link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5"><link rel="manifest" href="/site.webmanifest"><link rel="canonical" href="https://rogarmu8.github.io/posts/googlecalendar/" /><link rel="prev" href="https://rogarmu8.github.io/posts/clickycode/" /><link rel="next" href="https://rogarmu8.github.io/posts/onesongaday/" /><link rel="stylesheet" href="/css/style.min.css"><link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.1.1/css/all.min.css"></noscript><link rel="preload" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+        <noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@4.1.1/animate.min.css"></noscript><script type="application/ld+json">
+    {
+        "@context": "http://schema.org",
+        "@type": "BlogPosting",
+        "headline": "E-Ink Google Calendar",
+        "inLanguage": "en-us",
+        "mainEntityOfPage": {
+            "@type": "WebPage",
+            "@id": "https:\/\/rogarmu8.github.io\/posts\/googlecalendar\/"
+        },"image": [{
+                            "@type": "ImageObject",
+                            "url": "https:\/\/rogarmu8.github.io\/posts\/googlecalendar\/featured-image.jpg",
+                            "width":  1600 ,
+                            "height":  1042 
+                        }],"genre": "posts","wordcount":  189 ,
+        "url": "https:\/\/rogarmu8.github.io\/posts\/googlecalendar\/","datePublished": "2020-11-05T15:58:26+08:00","dateModified": "2020-11-05T15:58:26+08:00","publisher": {
+            "@type": "Organization",
+            "name": ""},"author": {
+                "@type": "Person",
+                "name": "Rómulo García"
+            },"description": ""
+    }
+    </script></head>
+    <body data-header-desktop="fixed" data-header-mobile="auto"><script type="text/javascript">(window.localStorage && localStorage.getItem('theme') ? localStorage.getItem('theme') === 'dark' : ('auto' === 'auto' ? window.matchMedia('(prefers-color-scheme: dark)').matches : 'auto' === 'dark')) && document.body.setAttribute('theme', 'dark');</script>
+
+        <div id="mask"></div><div class="wrapper"><header class="desktop" id="header-desktop">
+    <div class="header-wrapper">
+        <div class="header-title">
+            <a href="/" title="Rómulo García">Rómulo García</a>
+        </div>
+        <div class="menu">
+            <div class="menu-inner"><a class="menu-item" href="/about/" title="About me"> About </a><a class="menu-item" href="/contact/"> Contact </a><span class="menu-item delimiter"></span><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                    <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+                </a></div>
+        </div>
+    </div>
+</header><header class="mobile" id="header-mobile">
+    <div class="header-container">
+        <div class="header-wrapper">
+            <div class="header-title">
+                <a href="/" title="Rómulo García">Rómulo García</a>
+            </div>
+            <div class="menu-toggle" id="menu-toggle-mobile">
+                <span></span><span></span><span></span>
+            </div>
+        </div>
+        <div class="menu" id="menu-mobile"><a class="menu-item" href="/about/" title="About me">About</a><a class="menu-item" href="/contact/" title="">Contact</a><a href="javascript:void(0);" class="menu-item theme-switch" title="Switch Theme">
+                <i class="fas fa-adjust fa-fw" aria-hidden="true"></i>
+            </a></div>
+    </div>
+</header><main class="main">
+                <div class="container"><div class="toc" id="toc-auto">
+            <h2 class="toc-title">Contents</h2>
+            <div class="toc-content" id="toc-content-auto"></div>
+        </div><article class="page single"><h1 class="single-title animate__animated animate__flipInX">E-Ink Google Calendar</h1><div class="post-meta">
+            <div class="post-meta-line"></div>
+            <div class="post-meta-line"><i class="far fa-calendar-alt fa-fw" aria-hidden="true"></i>&nbsp;<time datetime="2020-11-05">2020-11-05</time>&nbsp;</div>
+        </div><div class="featured-image"><img
+        class="lazyload"
+        src="/svg/loading.min.svg"
+        data-src="/posts/googlecalendar/featured-image.jpg"
+        data-srcset="/posts/googlecalendar/featured-image.jpg, /posts/googlecalendar/featured-image.jpg 1.5x, /posts/googlecalendar/featured-image.jpg 2x"
+        data-sizes="auto"
+        alt="/posts/googlecalendar/featured-image.jpg"
+        title="/posts/googlecalendar/featured-image.jpg" /></div><div class="content" id="content"><p>E-ink display that connects to your google calendar and retrieves the data from the next 6 days updating every 24 hours.</p>
+<h1 id="parts-used">Parts used:</h1>
+<ul>
+<li><a href="https://www.waveshare.com/wiki/E-Paper_ESP32_Driver_Board" target="_blank" rel="noopener noreffer ">https://www.waveshare.com/wiki/E-Paper_ESP32_Driver_Board</a></li>
+<li><a href="https://www.waveshare.com/product/7.5inch-e-paper.htm" target="_blank" rel="noopener noreffer ">https://www.waveshare.com/product/7.5inch-e-paper.htm</a></li>
+</ul>
+<h1 id="explanation">Explanation:</h1>
+<ul>
+<li>We use google scripts to connect to our google calendar and retrieve the needed information.</li>
+<li>After doing such, from our esp32 we connect to the scripts application and retrieve the data from the html reponse.</li>
+<li>We give format to the response to have a better integrationwith the e-ink display.</li>
+<li>We print it to the display using the waveshare library for arduino. (Make sure you have all libraries and drivers download and installed correctly to be able to connect to the display)</li>
+<li>The data will update every 24 Hours, restarting the device will force an update at any time.</li>
+</ul>
+<h1 id="example-of-data-retrieved-from-google-scripts">Example of data retrieved from google scripts:</h1>
+<p>Sat May 08 2021
+Lunch with friends                  14:30:00-15:30:00
+Dinner with friends                 21:00:00-22:00:00
+|
+Sun May 09 2021
+Breakfast                           9:30:00-10:30:00
+|
+Mon May 10 2021
+Going to class                      All day
+|
+Tue May 11 2021
+Computer Science Exam               10:00:00-12:00:00
+|
+Wed May 12 2021
+Studying for next exam              All day
+|
+Thu May 13 2021
+Reading                             21:30:00-22:00:00</p>
+<div id="id-1"><a href="https://github.com/rogarmu8/E-INK-Google-Calendar" target="_blank" rel="noopener noreffer ">Github Link</a></div>
+</div><div class="post-footer" id="post-footer">
+    <div class="post-info">
+        <div class="post-info-line">
+            <div class="post-info-mod">
+                <span>Updated on 2020-11-05</span>
+            </div></div>
+        
+    </div>
+
+    <div class="post-info-more">
+        <section class="post-tags"></section>
+        <section>
+            <span><a href="javascript:void(0);" onclick="window.history.back();">Back</a></span>&nbsp;|&nbsp;<span><a href="/">Home</a></span>
+        </section>
+    </div>
+
+    <div class="post-nav"><a href="/posts/clickycode/" class="prev" rel="prev" title="Clicky Code"><i class="fas fa-angle-left fa-fw" aria-hidden="true"></i>Clicky Code</a>
+            <a href="/posts/onesongaday/" class="next" rel="next" title="One Song A Day">One Song A Day<i class="fas fa-angle-right fa-fw" aria-hidden="true"></i></a></div>
+</div>
+</article></div>
+            </main><footer class="footer">
+        <div class="footer-container"><div class="footer-line" itemscope itemtype="http://schema.org/CreativeWork"><i class="far fa-copyright fa-fw" aria-hidden="true"></i><span itemprop="copyrightYear">2023</span><span class="author" itemprop="copyrightHolder">&nbsp;<a href="/" target="_blank">Rómulo García Mus</a></span>&nbsp;|&nbsp;<span class="license"><a rel="license external nofollow noopener noreffer" href="https://creativecommons.org/licenses/by-nc/4.0/" target="_blank">CC BY-NC 4.0</a></span></div>
+        </div>
+    </footer></div>
+
+        <div id="fixed-buttons"><a href="#" id="back-to-top" class="fixed-button" title="Back to Top">
+                <i class="fas fa-arrow-up fa-fw" aria-hidden="true"></i>
+            </a><a href="#" id="view-comments" class="fixed-button" title="View Comments">
+                <i class="fas fa-comment fa-fw" aria-hidden="true"></i>
+            </a>
+        </div><link rel="stylesheet" href="/css/3966f2.min.css"><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/lazysizes@5.3.2/lazysizes.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/clipboard@2.0.11/dist/clipboard.min.js"></script><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/sharer.js@0.5.1/sharer.min.js"></script><script type="text/javascript">window.config={"code":{"copyTitle":"Copy to clipboard","maxShownLines":50},"comment":{}};</script><script type="text/javascript" src="/js/theme.min.js"></script></body>
+</html>

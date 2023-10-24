@@ -47,7 +47,7 @@ button[type=submit]:hover {
 </style>
 <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
 
-<form id="contact-form" action="https://api.staticforms.xyz/submit" target="dummyframe" method="POST" onsubmit="alert('you submitted the form');">
+<form id="contact-form" action="https://api.staticforms.xyz/submit" target="dummyframe" method="POST" onsubmit="alert('The form was submitted, thank you!');">
   <input type="hidden" name="accessKey" value="037273a1-68ac-4e2c-9d59-aae8119d36c9">
   <br>
   <div class="mb-3 pt-0">
