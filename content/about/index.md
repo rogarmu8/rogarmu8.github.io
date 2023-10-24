@@ -5,7 +5,7 @@ draft = false
 +++
 #
 
-Welcome! I am Rómulo, a passionate and innovative computer scientist and software engineer based in Madrid, Spain. My journey in the realm of technology began at the Autonomous University of Madrid, where I delved deep into the intricate world of computer science. Curiosity has always been the driving force behind my exploration of how things work, propelling me to push the boundaries of conventional knowledge and seek out new ways to simplify everyday life.
+Welcome! I am Rómulo, a passionate and innovative computer scientist and software engineer based in Madrid, Spain. My journey in the realm of technology began at the Autonomous University of Madrid, where I delved deep into the intricate world of computer science. I always wondered how things worked, tried creating and developing new projects to make everybody's day to day life easier.
 
 
 I am currently working in GMV as a fullstack software developer for european defense projects.
