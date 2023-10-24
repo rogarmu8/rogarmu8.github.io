@@ -4,15 +4,16 @@
         <link>https://rogarmu8.github.io/</link>
         <description>Rómulo García Portfolio</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>rogarmu8@gmail.com (Rómulo García Mus)</managingEditor>
-            <webMaster>rogarmu8@gmail.com (Rómulo García Mus)</webMaster><lastBuildDate>Mon, 23 Oct 2023 12:25:54 &#43;0200</lastBuildDate>
+            <webMaster>rogarmu8@gmail.com (Rómulo García Mus)</webMaster><lastBuildDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</lastBuildDate>
             <atom:link href="https://rogarmu8.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
     <title>One Song A Day</title>
     <link>https://rogarmu8.github.io/posts/onesongaday/</link>
-    <pubDate>Mon, 23 Oct 2023 12:25:54 &#43;0200</pubDate>
-    <author>Rómulo García Mus</author>
+    <pubDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</pubDate>
+    <author>Rómulo García</author>
     <guid>https://rogarmu8.github.io/posts/onesongaday/</guid>
-    <description><![CDATA[]]></description>
+    <description><![CDATA[AI Song recommendation system based on user song reviews. Application was made using Android Studio (Java) and Firebase. A Python server-side application was made to manage data and populate the database.
+Google Play Link ]]></description>
 </item>
 </channel>
 </rss>
