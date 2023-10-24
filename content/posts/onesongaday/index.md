@@ -1,8 +1,8 @@
 ---
 weight: 2
 title: "One Song A Day"
-date: 2021-05-05T15:58:26+08:00
-lastmod: 2021-05-05T15:58:26+08:00
+date: 2021-02-05T15:58:26+08:00
+lastmod: 2021-02-05T15:58:26+08:00
 draft: false
 author: "Rómulo García"
 description: ""
@@ -14,7 +14,7 @@ resources:
   src: "featured-image-preview.jpg"
 ---
 
-AI Song recommendation system based on user song reviews. Application was made using Android Studio (Java) and Firebase. A Python server-side application was made to manage data and populate the database.
+AI Song recommendation android application based on user song reviews. The application was made using Android Studio (Java) and Firebase. A Python server-side application was developed to manage data and populate the database.
 
 ![Image](image0.jpg)
 

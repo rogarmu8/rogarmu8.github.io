@@ -14,9 +14,9 @@ resources:
   src: "featured-image-preview.jpg"
 ---
 Bachelor Thesis focused on testing Gaussian Processes and Deep Gaussian Processes to predict
-eolian energy production. Our experiments will take place in Sotavento, a wind mill complex located in the North of Spain. Wind energy is not constant, the wind mills don’t operate at certain speeds, the infrastructures require a lot of space...
+wind energy production. Our experiments will take place in Sotavento, a wind mill complex located in the North of Spain. Wind energy is not constant, the wind mills don’t operate at certain speeds, the infrastructures require a lot of space...
 
-Therefore, these predictions are crucial as they can avoid power shortages, provide the basis for making decisions in power system planning and operation, between many other positive applications. We are gong to use Gaussian processes as they can scale to very large datasets, and are non parametric. Moreover, the deep Gaussian processes approach increases their flexibility and precision.
+Therefore, these predictions are crucial as they can avoid power shortages, provide the basis for making decisions in power system planning and operation, between many other positive applications. We are going to use Gaussian processes as they can scale to very large datasets, and are non parametric. Moreover, the deep Gaussian processes approach increases their flexibility and precision.
 
 ![Image](image0.jpg)
 

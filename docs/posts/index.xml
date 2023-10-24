@@ -10,16 +10,25 @@
     <pubDate>Sun, 05 Mar 2023 15:58:26 &#43;0800</pubDate>
     <author>Rómulo García</author>
     <guid>https://rogarmu8.github.io/posts/tfg/</guid>
-    <description><![CDATA[Bachelor Thesis focused on testing Gaussian Processes and Deep Gaussian Processes to predict eolian energy production. Our experiments will take place in Sotavento, a wind mill complex located in the North of Spain. Wind energy is not constant, the wind mills don’t operate at certain speeds, the infrastructures require a lot of space&hellip;
+    <description><![CDATA[Bachelor Thesis focused on testing Gaussian Processes and Deep Gaussian Processes to predict wind energy production. Our experiments will take place in Sotavento, a wind mill complex located in the North of Spain. Wind energy is not constant, the wind mills don’t operate at certain speeds, the infrastructures require a lot of space&hellip;
 Therefore, these predictions are crucial as they can avoid power shortages, provide the basis for making decisions in power system planning and operation, between many other positive applications.]]></description>
+</item>
+<item>
+    <title>Ray Tracer</title>
+    <link>https://rogarmu8.github.io/posts/infogr/</link>
+    <pubDate>Wed, 05 May 2021 15:58:26 &#43;0800</pubDate>
+    <author>Rómulo García</author>
+    <guid>https://rogarmu8.github.io/posts/infogr/</guid>
+    <description><![CDATA[First assignment consisting of a Whitted-style ray tracer. This is a recursive rendering algorithm for determining light transport between one or more light sources and a camera, via scene surfaces, by tracing rays backwards into the scene, starting at the camera.
+Second assignment consisting of a basic 3D engine. The 3D engine is a tool to visualize a scene graph: a hierarchy of meshes, each of which can have a unique local transform.]]></description>
 </item>
 <item>
     <title>One Song A Day</title>
     <link>https://rogarmu8.github.io/posts/onesongaday/</link>
-    <pubDate>Wed, 05 May 2021 15:58:26 &#43;0800</pubDate>
+    <pubDate>Fri, 05 Feb 2021 15:58:26 &#43;0800</pubDate>
     <author>Rómulo García</author>
     <guid>https://rogarmu8.github.io/posts/onesongaday/</guid>
-    <description><![CDATA[AI Song recommendation system based on user song reviews. Application was made using Android Studio (Java) and Firebase. A Python server-side application was made to manage data and populate the database.
+    <description><![CDATA[AI Song recommendation android application based on user song reviews. The application was made using Android Studio (Java) and Firebase. A Python server-side application was developed to manage data and populate the database.
 Google Play Link ]]></description>
 </item>
 <item>
