@@ -12,7 +12,7 @@ I am currently working in GMV as a fullstack software developer for european def
 
 The technologies that I use the most in a day to day basis are Java Swing, Liferay, Python, PyTorch, OpenCV and Docker.
 
-![Image](image.png)
+![Image](image.jpg)
 
 Thank you for visiting my portfolio. I look forward to the opportunity to collaborate and create a more efficient, interconnected, and innovative world together.
 

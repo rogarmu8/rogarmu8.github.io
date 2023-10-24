@@ -25,10 +25,10 @@ publishDir = "docs"
     title = "About me"
 [[menu.main]]
     weight = 2
-    identifier = "Contact me"
+    identifier = "Contact"
     pre = ""
     post = ""
-    name = "Contact me"
+    name = "Contact"
     url = "/contact/"
     title = ""
 
@@ -170,4 +170,9 @@ publishDir = "docs"
       # LoveIt DELETED | 0.2.0 replaced with hiddenFromHomePage in params.page
       # default behavior when you don't set "hiddenFromHomePage" in front matter
       defaultHiddenFromHomePage = false
+
+[params.social]
+    GitHub = "rogarmu8"
+    Linkedin = "romulo-garcia"
+    Email = "rogarmu8@gmail.com"
 

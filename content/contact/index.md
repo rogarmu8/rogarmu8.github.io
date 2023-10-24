@@ -25,3 +25,6 @@ draft = false
   <input type="text" name="honeypot" style="display: none;">
 </form>
 {{< /raw >}}
+
+#
+Or send me an email to [rogarmu8@gmail.com](mailto:rogarmu8@gmail.com)
