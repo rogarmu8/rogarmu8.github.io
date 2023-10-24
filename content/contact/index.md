@@ -5,7 +5,49 @@ draft = false
 +++
 
 {{< raw >}}
-<form action="https://api.staticforms.xyz/submit" target="raw" method="POST">
+<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+* {box-sizing: border-box;}
+
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+input[type=email], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+button[type=submit] {
+  background-color: #7e7e7e;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button[type=submit]:hover {
+  background-color: #282828;
+}
+
+
+</style>
+<iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
+
+<form id="contact-form" action="https://api.staticforms.xyz/submit" target="dummyframe" method="POST" onsubmit="alert('you submitted the form');">
   <input type="hidden" name="accessKey" value="037273a1-68ac-4e2c-9d59-aae8119d36c9">
   <br>
   <div class="mb-3 pt-0">
@@ -24,6 +66,8 @@ draft = false
   <!-- If we receive data in this field submission will be ignored -->
   <input type="text" name="honeypot" style="display: none;">
 </form>
+
+
 {{< /raw >}}
 
 #
