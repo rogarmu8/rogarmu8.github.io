@@ -4,15 +4,42 @@
         <link>https://rogarmu8.github.io/</link>
         <description>Rómulo García Portfolio</description>
         <generator>Hugo -- gohugo.io</generator><language>en-us</language><managingEditor>rogarmu8@gmail.com (Rómulo García Mus)</managingEditor>
-            <webMaster>rogarmu8@gmail.com (Rómulo García Mus)</webMaster><lastBuildDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</lastBuildDate>
+            <webMaster>rogarmu8@gmail.com (Rómulo García Mus)</webMaster><lastBuildDate>Sun, 05 Mar 2023 15:58:26 &#43;0800</lastBuildDate>
             <atom:link href="https://rogarmu8.github.io/index.xml" rel="self" type="application/rss+xml" />
         <item>
+    <title>Bachelor Thesis: Using of Deep Gaussian Processes for Wind Energy Prediction</title>
+    <link>https://rogarmu8.github.io/posts/tfg/</link>
+    <pubDate>Sun, 05 Mar 2023 15:58:26 &#43;0800</pubDate>
+    <author>Rómulo García</author>
+    <guid>https://rogarmu8.github.io/posts/tfg/</guid>
+    <description><![CDATA[Bachelor Thesis focused on testing Gaussian Processes and Deep Gaussian Processes to predict eolian energy production. Our experiments will take place in Sotavento, a wind mill complex located in the North of Spain. Wind energy is not constant, the wind mills don’t operate at certain speeds, the infrastructures require a lot of space&hellip;
+Therefore, these predictions are crucial as they can avoid power shortages, provide the basis for making decisions in power system planning and operation, between many other positive applications.]]></description>
+</item>
+<item>
     <title>One Song A Day</title>
     <link>https://rogarmu8.github.io/posts/onesongaday/</link>
-    <pubDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</pubDate>
+    <pubDate>Wed, 05 May 2021 15:58:26 &#43;0800</pubDate>
     <author>Rómulo García</author>
     <guid>https://rogarmu8.github.io/posts/onesongaday/</guid>
     <description><![CDATA[AI Song recommendation system based on user song reviews. Application was made using Android Studio (Java) and Firebase. A Python server-side application was made to manage data and populate the database.
+Google Play Link ]]></description>
+</item>
+<item>
+    <title>Clicky Code</title>
+    <link>https://rogarmu8.github.io/posts/clickycode/</link>
+    <pubDate>Thu, 05 Mar 2020 15:58:26 &#43;0800</pubDate>
+    <author>Rómulo García</author>
+    <guid>https://rogarmu8.github.io/posts/clickycode/</guid>
+    <description><![CDATA[Clicker video game with room decoration management. Game made with Unity(C#), Photoshop, Bosca Ceoil.
+Google Play Link ]]></description>
+</item>
+<item>
+    <title>Fallen Dots</title>
+    <link>https://rogarmu8.github.io/posts/fallendots/</link>
+    <pubDate>Fri, 05 Aug 2016 15:58:26 &#43;0800</pubDate>
+    <author>Rómulo García</author>
+    <guid>https://rogarmu8.github.io/posts/fallendots/</guid>
+    <description><![CDATA[Simple video game based on reflexes. Game made with Gdevelop.
 Google Play Link ]]></description>
 </item>
 </channel>

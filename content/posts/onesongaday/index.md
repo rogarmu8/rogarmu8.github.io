@@ -1,8 +1,8 @@
 ---
 weight: 2
 title: "One Song A Day"
-date: 2020-03-05T15:58:26+08:00
-lastmod: 2020-03-05T15:58:26+08:00
+date: 2021-05-05T15:58:26+08:00
+lastmod: 2021-05-05T15:58:26+08:00
 draft: false
 author: "Rómulo García"
 description: ""
@@ -18,7 +18,6 @@ AI Song recommendation system based on user song reviews. Application was made u
 
 ![Image](image0.jpg)
 
-
 {{< style "text-align:center !important;" >}}
-[Google Play Link](https://play.google.com/store/apps/details?id=com.rogarmu8.onesongaday&pcampaignid=web_share)
+[Google Play Link](https://play.google.com/store/apps/details?id=com.rogarmu8.onesongaday)
 {{< /style >}}
