@@ -155,7 +155,7 @@ publishDir = "docs"
       # LoveIt CHANGED | 0.2.7 title shown in home page (HTML format is supported)
       title = "Rómulo García"
       # subtitle shown in home page (HTML format is supported)
-      subtitle = "Computer Science and Software Engineer"
+      subtitle = "Computer Science and Software Engineering"
       # whether to use typeit animation for subtitle
       typeit = true
       # whether to show social links
