@@ -10,7 +10,7 @@ Welcome! I am Rómulo, a passionate and innovative computer scientist and softwa
 
 I am currently working in GMV as a fullstack software developer for european defense projects.
 
-The technologies that I use the most in a day to day basis are Java Swing, Liferay, Python, PyTorch, OpenCV and Docker.
+The technologies that I use the most on a daily basis are Java Swing, Liferay, Python, PyTorch, OpenCV and Docker.
 
 ![Image](image.jpg)
 
