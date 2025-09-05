@@ -1,17 +1,17 @@
 ---
 weight: 6
 title: "100 Vibe Coding"
-date: 2024-01-15T10:00:00+08:00
-lastmod: 2024-01-15T10:00:00+08:00
+date: 2023-12-15T10:00:00+08:00
+lastmod: 2023-12-15T10:00:00+08:00
 draft: false
 author: "Rómulo García"
 description: "AI-powered coding challenges platform that teaches users to build projects efficiently through 100 progressive challenges."
 images: []
 resources:
 - name: "featured-image"
-  src: "featured-image.jpg"
+  src: "featured-image.png"
 - name: "featured-image-preview"
-  src: "featured-image-preview.jpg"
+  src: "featured-image-preview.png"
 ---
 
 100 Vibe Coding is an innovative platform that leverages AI to help users build project ideas through 100 progressive challenges. It focuses on mastering the art of prompting and accelerating project development.

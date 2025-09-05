@@ -1,8 +1,8 @@
 ---
 weight: 4
 title: "OneReferral"
-date: 2024-01-05T10:00:00+08:00
-lastmod: 2024-01-05T10:00:00+08:00
+date: 2023-12-05T10:00:00+08:00
+lastmod: 2023-12-05T10:00:00+08:00
 draft: false
 author: "Rómulo García"
 description: "One-time payment referral system designed exclusively for Stripe, enabling businesses to manage customer referrals efficiently."
