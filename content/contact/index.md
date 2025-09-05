@@ -4,7 +4,6 @@ date = 2023-10-23T15:27:29+02:00
 draft = false
 +++
 
-{{< raw >}}
 <style>
 body {font-family: Arial, Helvetica, sans-serif;}
 * {box-sizing: border-box;}
@@ -42,9 +41,8 @@ button[type=submit] {
 button[type=submit]:hover {
   background-color: #282828;
 }
-
-
 </style>
+
 <iframe name="dummyframe" id="dummyframe" style="display: none;"></iframe>
 
 <form id="contact-form" action="https://api.staticforms.xyz/submit" target="dummyframe" method="POST" onsubmit="alert('The form was submitted, thank you!');">
@@ -66,9 +64,6 @@ button[type=submit]:hover {
   <!-- If we receive data in this field submission will be ignored -->
   <input type="text" name="honeypot" style="display: none;">
 </form>
-
-
-{{< /raw >}}
 
 #
 Or send me an email to [rogarmu8@gmail.com](mailto:rogarmu8@gmail.com)

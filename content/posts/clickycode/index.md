@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 15
 title: "Clicky Code"
 date: 2020-03-05T15:58:26+08:00
 lastmod: 2020-03-05T15:58:26+08:00
@@ -18,6 +18,4 @@ Clicker video game with room decoration management. Game made with Unity(C#), Ph
 
 ![Image](image0.jpg)
 
-{{< style "text-align:center !important;" >}}
 [Google Play Link](https://play.google.com/store/apps/details?id=com.rogarmu8.clickycode)
-{{< /style >}}

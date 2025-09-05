@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 17
 title: "Fallen Dots"
 date: 2016-08-05T15:58:26+08:00
 lastmod: 2016-08-05T15:58:26+08:00
@@ -18,6 +18,4 @@ Simple video game based on reflexes. Game made with Gdevelop.
 
 ![Image](image0.jpg)
 
-{{< style "text-align:center !important;" >}}
 [Google Play Link](https://play.google.com/store/apps/details?id=com.rogarmu8Games.FallenDots)
-{{< /style >}}

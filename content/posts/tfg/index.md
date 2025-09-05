@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 5
 title: "Bachelor Thesis: Using of Deep Gaussian Processes for Wind Energy Prediction"
 date: 2023-03-05T15:58:26+08:00
 lastmod: 2023-03-05T15:58:26+08:00
@@ -20,6 +20,4 @@ Therefore, these predictions are crucial as they can avoid power shortages, prov
 
 ![Image](image0.jpg)
 
-{{< style "text-align:center !important;" >}}
-[Full Thesis](Using_of_Deep_Gaussian_Processes_for_Wind_Energy_Prediction.pdf)
-{{< /style >}}
+[Full Thesis](./Using_of_Deep_Gaussian_Processes_for_Wind_Energy_Prediction.pdf)

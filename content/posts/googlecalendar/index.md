@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 12
 title: "E-Ink Google Calendar"
 date: 2021-01-05T15:58:26+08:00
 lastmod: 2021-01-05T15:58:26+08:00
@@ -53,6 +53,4 @@ Reading                             21:30:00-22:00:00
 
 
 
-{{< style "text-align:center !important;" >}}
 [Github Link](https://github.com/rogarmu8/E-INK-Google-Calendar)
-{{< /style >}}

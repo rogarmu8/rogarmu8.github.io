@@ -1,8 +1,8 @@
 ---
-weight: 4
+weight: 9
 title: "OneReferral"
-date: 2023-12-05T10:00:00+08:00
-lastmod: 2023-12-05T10:00:00+08:00
+date: 2024-08-15T10:00:00+08:00
+lastmod: 2024-08-15T10:00:00+08:00
 draft: false
 author: "Rómulo García"
 description: "One-time payment referral system designed exclusively for Stripe, enabling businesses to manage customer referrals efficiently."
@@ -16,7 +16,7 @@ resources:
 
 OneReferral provides a straightforward, one-time payment referral system designed exclusively for Stripe users. By leveraging satisfied customers, businesses can reduce acquisition costs and foster growth through personal recommendations.
 
-## Key Features
+# Key Features
 
 - **Dashboard**: Manage customers, campaigns, and track progress with intuitive charts
 - **Diverse Campaigns**: Create campaigns with limited duration discounts, maximum stacking discounts, and support for different currencies
@@ -24,6 +24,4 @@ OneReferral provides a straightforward, one-time payment referral system designe
 - **Lifetime Access**: Offers a pay-once, access-forever model with options for single projects or unlimited projects
 
 
-{{< style "text-align:center !important;" >}}
 [Visit OneReferral](https://www.onereferral.app)
-{{< /style >}}

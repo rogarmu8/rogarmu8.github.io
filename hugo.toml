@@ -4,6 +4,7 @@ languageName = "English"
 title = 'Rómulo García'
 theme = 'LoveIt'
 publishDir = "docs"
+ignoreLogs = ['warning-goldmark-raw-html']
 
 # Author config
 [author]
@@ -40,6 +41,11 @@ publishDir = "docs"
   # LoveIt NEW | 0.1.1 which hash function used for SRI, when empty, no SRI is used
   # ["sha256", "sha384", "sha512", "md5"]
   fingerprint = ""
+
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
   # LoveIt NEW | 0.2.0 date format
   dateFormat = "2006-01-02"
   # website title for Open Graph and Twitter Cards

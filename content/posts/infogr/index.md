@@ -1,5 +1,5 @@
 ---
-weight: 2
+weight: 7
 title: "Basic 3D Engine"
 date: 2022-05-05T15:58:26+08:00
 lastmod: 2022-05-05T15:58:26+08:00
@@ -29,6 +29,4 @@ shader includes a set of light sources. The shading model implemented in the
 fragment shader determines the response of the materials to these lights. Moreover, some postprocessing techniques such as anti-aliasing are also implemented.
 
 
-{{< style "text-align:center !important;" >}}
 [Github Link](https://github.com/rogarmu8/Graphics)
-{{< /style >}}
