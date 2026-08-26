@@ -99,10 +99,10 @@ export function bootApp(root: HTMLElement, data: AppData) {
   });
 
   const menu = [
-    { id: "browse", label: "Browse", hot: "b", key: "b", icon: ICONS.folder },
-    { id: "fuzzy", label: "Fuzzy find", hot: "f", key: "f", icon: ICONS.search },
-    { id: "about", label: "About me", hot: "a", key: "a", icon: ICONS.user },
-    { id: "theme", label: "Toggle theme", hot: "t", key: "t", icon: ICONS.sun },
+    { id: "browse", label: "Browse", key: "b", icon: ICONS.folder },
+    { id: "fuzzy", label: "Fuzzy find", key: "f", icon: ICONS.search },
+    { id: "about", label: "About me", key: "a", icon: ICONS.user },
+    { id: "theme", label: "Toggle theme", key: "t", icon: ICONS.sun },
   ] as const;
 
   function preferredTheme(): "dark" | "light" {
@@ -437,6 +437,20 @@ export function bootApp(root: HTMLElement, data: AppData) {
     return fuse.search(q, { limit: 60 });
   }
 
+  function markSearchMedia(body: HTMLElement, row: SearchRow, query: string | null) {
+    const mdImage = row.text.match(/!\[[^\]]*\]\(([^)\s]+)\)/);
+    const needle = mdImage?.[1]?.split("/").pop()?.toLowerCase() ?? null;
+    const q = query && query.length > 1 ? query.toLowerCase() : null;
+
+    for (const img of body.querySelectorAll<HTMLImageElement>("img")) {
+      const src = (img.getAttribute("src") || "").toLowerCase();
+      const alt = (img.getAttribute("alt") || "").toLowerCase();
+      const byLine = needle ? src.includes(needle) : false;
+      const byQuery = q ? src.includes(q) || alt.includes(q) : false;
+      if (byLine || byQuery) img.classList.add("search-hit");
+    }
+  }
+
   function openSearchHit(row: SearchRow) {
     view = "explorer";
     helpOpen = false;
@@ -447,6 +461,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
     render();
     requestAnimationFrame(() => {
       const body = root.querySelector<HTMLElement>(".editor-body");
+      if (body) markSearchMedia(body, row, highlightQuery);
       const hit =
         root.querySelector<HTMLElement>(".search-hit") ||
         root.querySelector<HTMLElement>("[data-line]");
@@ -462,13 +477,22 @@ export function bootApp(root: HTMLElement, data: AppData) {
     else if (id === "theme") toggleTheme();
   }
 
+  function highlightInHtml(html: string, query: string) {
+    const escaped = query.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    const re = new RegExp(`(${escaped})`, "gi");
+    // Only highlight text nodes — never inside tags/attributes (keeps img src intact)
+    return html.replace(/(<[^>]*>)|([^<]+)/g, (match, tag, text) => {
+      if (tag) return tag;
+      return text.replace(re, `<mark class="search-hit">$1</mark>`);
+    });
+  }
+
   function renderMarkdown(file: ContentFile) {
     const hasLeadingTitle = /^\s*#\s+/.test(file.body);
     const source = hasLeadingTitle ? file.body : `# ${file.title}\n\n${file.body}`;
     let html = marked.parse(source) as string;
     if (highlightQuery && highlightQuery.length > 1) {
-      const escaped = highlightQuery.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-      html = html.replace(new RegExp(`(${escaped})`, "gi"), `<mark class="search-hit">$1</mark>`);
+      html = highlightInHtml(html, highlightQuery);
     }
     if (highlightLine) {
       html = `<div class="line-jump" data-line="${highlightLine}"></div>${html}`;
@@ -502,11 +526,6 @@ export function bootApp(root: HTMLElement, data: AppData) {
               const label =
                 item.id === "theme" ? (isDark ? "Theme (Light)" : "Theme (Dark)") : item.label;
               const icon = item.id === "theme" ? (isDark ? ICONS.sun : ICONS.moon) : item.icon;
-              const hotIndex = label.toLowerCase().indexOf(item.hot);
-              const renderedLabel =
-                hotIndex >= 0
-                  ? `${escapeHtml(label.slice(0, hotIndex))}<span class="hot">${escapeHtml(label.charAt(hotIndex))}</span>${escapeHtml(label.slice(hotIndex + 1))}`
-                  : escapeHtml(label);
               return `
                 <button
                   class="menu-item ${i === selectedMenu ? "is-selected" : ""}"
@@ -515,7 +534,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
                   role="menuitem"
                 >
                   <span class="menu-icon" aria-hidden="true">${icon}</span>
-                  <span class="menu-label">${renderedLabel}</span>
+                  <span class="menu-label">${escapeHtml(label)}</span>
                   <span class="menu-key">${item.key}</span>
                 </button>`;
             })

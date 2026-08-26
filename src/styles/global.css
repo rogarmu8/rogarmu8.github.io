@@ -187,11 +187,6 @@ a {
   background: var(--bg-hover);
 }
 
-.menu-item.is-selected .menu-label .hot {
-  background: var(--highlight);
-  color: var(--bg);
-}
-
 .menu-icon {
   color: var(--accent);
   width: 1.25rem;
@@ -219,14 +214,6 @@ a {
 
 .menu-label {
   color: var(--text);
-}
-
-.menu-label .hot {
-  display: inline-block;
-  min-width: 1.05em;
-  padding: 0 0.12em;
-  border-radius: 3px;
-  text-align: center;
 }
 
 .menu-key {
@@ -561,6 +548,13 @@ a {
   color: inherit;
   border-radius: 2px;
   padding: 0 0.1em;
+}
+
+.md img.search-hit {
+  background: transparent;
+  padding: 0;
+  outline: 2px solid color-mix(in srgb, var(--warn) 70%, transparent);
+  outline-offset: 4px;
 }
 
 .md a {
