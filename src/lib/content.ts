@@ -21,7 +21,7 @@ const ROOT = process.cwd();
 function stripHugoShortcodes(body: string): string {
   return body
     .replace(/\{\{<\s*youtube\s+([^\s>]+)\s*>\}\}/g, (_m, id) => {
-      return `\n<iframe class="yt" src="https://www.youtube.com/embed/${id}" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>\n`;
+      return `\n<iframe class="yt" src="https://www.youtube.com/embed/${id}?enablejsapi=1" title="YouTube video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen loading="lazy"></iframe>\n`;
     })
     .replace(/\{\{<[^>]+>\}\}/g, "")
     .replace(/\{\{%[^%]+%\}\}/g, "");

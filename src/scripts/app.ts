@@ -84,6 +84,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
   let pendingTimer: number | null = null;
   let helpOpen = false;
   let treeDrawerOpen = false;
+  let editorLineIndex = 0;
 
   const fuse = new Fuse(data.searchIndex, {
     keys: [
@@ -104,27 +105,33 @@ export function bootApp(root: HTMLElement, data: AppData) {
     { id: "theme", label: "Toggle theme", hot: "t", key: "t", icon: ICONS.sun },
   ] as const;
 
-  function getTheme(): "dark" | "light" {
-    return (document.documentElement.getAttribute("data-theme") as "dark" | "light") || "dark";
+  function preferredTheme(): "dark" | "light" {
+    return window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
   }
 
-  function setTheme(theme: "dark" | "light") {
+  function getTheme(): "dark" | "light" {
+    return (document.documentElement.getAttribute("data-theme") as "dark" | "light") || preferredTheme();
+  }
+
+  function setTheme(theme: "dark" | "light", persist = true) {
     document.documentElement.setAttribute("data-theme", theme);
-    localStorage.setItem(THEME_KEY, theme);
+    if (persist) localStorage.setItem(THEME_KEY, theme);
   }
 
   function toggleTheme() {
-    setTheme(getTheme() === "dark" ? "light" : "dark");
+    setTheme(getTheme() === "dark" ? "light" : "dark", true);
     render();
   }
 
   function openFile(fileId: string | null | undefined, opts?: { highlight?: boolean; focus?: FocusPane }) {
     if (!fileId || !filesById.has(fileId)) return;
+    const switched = activeFileId !== fileId;
     if (!openTabs.includes(fileId)) openTabs = [...openTabs, fileId];
     activeFileId = fileId;
     const idx = treeFiles.findIndex((f) => f.id === fileId);
     if (idx >= 0) treeCursor = idx;
     if (opts?.focus) focusPane = opts.focus;
+    if (switched) editorLineIndex = 0;
     if (!opts?.highlight) {
       highlightQuery = null;
       highlightLine = null;
@@ -231,6 +238,152 @@ export function bootApp(root: HTMLElement, data: AppData) {
   function syncFocusChrome() {
     root.querySelector(".tree")?.classList.toggle("is-focused", focusPane === "tree");
     root.querySelector(".editor")?.classList.toggle("is-focused", focusPane === "editor");
+  }
+
+  function getEditorLineEls(): HTMLElement[] {
+    const md = root.querySelector(".md");
+    if (!md) return [];
+    return [
+      ...md.querySelectorAll<HTMLElement>(
+        ":scope > p, :scope > h1, :scope > h2, :scope > h3, :scope > blockquote, :scope > pre, :scope > iframe, :scope > video, :scope > img, :scope li",
+      ),
+    ];
+  }
+
+  function lineHasAction(el: HTMLElement) {
+    return Boolean(
+      el.matches("video, iframe.yt, img") ||
+        el.querySelector("a[href], video, iframe.yt, iframe[src*='youtube'], iframe[src*='youtu.be'], img"),
+    );
+  }
+
+  function syncEditorLine() {
+    const lines = getEditorLineEls();
+    const body = root.querySelector<HTMLElement>(".editor-body");
+    for (const el of lines) {
+      el.classList.remove("is-line-active", "has-link");
+      el.style.removeProperty("--hl-inset-left");
+      el.style.removeProperty("--hl-width");
+    }
+
+    let bar = body?.querySelector<HTMLElement>(".line-highlight-bar");
+    if (!body) return;
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.className = "line-highlight-bar";
+      bar.setAttribute("aria-hidden", "true");
+      body.prepend(bar);
+    }
+
+    if (focusPane !== "editor" || !lines.length) {
+      bar.hidden = true;
+      return;
+    }
+
+    editorLineIndex = Math.max(0, Math.min(editorLineIndex, lines.length - 1));
+    const active = lines[editorLineIndex]!;
+    active.classList.add("is-line-active");
+    const actionable = lineHasAction(active);
+    if (actionable) active.classList.add("has-link");
+
+    const bodyRect = body.getBoundingClientRect();
+    const activeRect = active.getBoundingClientRect();
+    bar.hidden = false;
+    bar.classList.toggle("has-link", actionable);
+    bar.style.top = `${activeRect.top - bodyRect.top + body.scrollTop}px`;
+    bar.style.height = `${Math.max(activeRect.height, 1)}px`;
+
+    active.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    requestAnimationFrame(() => {
+      const latestBody = root.querySelector<HTMLElement>(".editor-body");
+      const latestBar = latestBody?.querySelector<HTMLElement>(".line-highlight-bar");
+      const latestActive = getEditorLineEls()[editorLineIndex];
+      if (!latestBody || !latestBar || !latestActive || focusPane !== "editor") return;
+      const b = latestBody.getBoundingClientRect();
+      const a = latestActive.getBoundingClientRect();
+      latestBar.style.top = `${a.top - b.top + latestBody.scrollTop}px`;
+      latestBar.style.height = `${Math.max(a.height, 1)}px`;
+    });
+  }
+
+  function moveEditorLine(delta: number) {
+    focusPane = "editor";
+    const lines = getEditorLineEls();
+    if (!lines.length) {
+      scrollEditor("line", delta > 0 ? 1 : -1);
+      syncFocusChrome();
+      return;
+    }
+    editorLineIndex = Math.max(0, Math.min(lines.length - 1, editorLineIndex + delta));
+    syncFocusChrome();
+    syncEditorLine();
+  }
+
+  function toggleHtmlVideo(video: HTMLVideoElement) {
+    if (video.paused) void video.play();
+    else video.pause();
+    return true;
+  }
+
+  function toggleYoutubeEmbed(iframe: HTMLIFrameElement) {
+    try {
+      const url = new URL(iframe.src, window.location.href);
+      if (!url.searchParams.has("enablejsapi")) {
+        url.searchParams.set("enablejsapi", "1");
+        iframe.src = url.toString();
+      }
+    } catch {
+      /* ignore */
+    }
+    const playing = iframe.dataset.playing === "1";
+    const func = playing ? "pauseVideo" : "playVideo";
+    iframe.contentWindow?.postMessage(
+      JSON.stringify({ event: "command", func, args: [] }),
+      "*",
+    );
+    iframe.dataset.playing = playing ? "0" : "1";
+    return true;
+  }
+
+  function activateEditorLineLink() {
+    const lines = getEditorLineEls();
+    const active = lines[editorLineIndex];
+    if (!active) return false;
+
+    const video =
+      (active.matches("video") ? active : null) || active.querySelector("video");
+    if (video instanceof HTMLVideoElement) return toggleHtmlVideo(video);
+
+    const yt =
+      (active.matches("iframe.yt, iframe[src*='youtube'], iframe[src*='youtu.be']")
+        ? active
+        : null) ||
+      active.querySelector<HTMLIFrameElement>("iframe.yt, iframe[src*='youtube'], iframe[src*='youtu.be']");
+    if (yt instanceof HTMLIFrameElement) return toggleYoutubeEmbed(yt);
+
+    const link = active.querySelector<HTMLAnchorElement>("a[href]");
+    if (link) {
+      const href = link.getAttribute("href")?.trim() ?? "";
+      if (!href || href === "#") return false;
+      if (href.startsWith("#")) {
+        root.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
+        return true;
+      }
+      if (/^https?:\/\//i.test(link.href) || link.host !== window.location.host) {
+        window.open(link.href, "_blank", "noopener,noreferrer");
+      } else {
+        window.location.assign(link.href);
+      }
+      return true;
+    }
+
+    const img = (active.matches("img") ? active : null) || active.querySelector("img");
+    if (img instanceof HTMLImageElement && img.src) {
+      window.open(img.currentSrc || img.src, "_blank", "noopener,noreferrer");
+      return true;
+    }
+
+    return false;
   }
 
   function scrollEditor(mode: "line" | "half" | "page" | "top" | "bottom", dir: 1 | -1 = 1) {
@@ -347,7 +500,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
             .map((item, i) => {
               const isDark = getTheme() === "dark";
               const label =
-                item.id === "theme" ? (isDark ? "Light theme" : "Dark theme") : item.label;
+                item.id === "theme" ? (isDark ? "Theme (Light)" : "Theme (Dark)") : item.label;
               const icon = item.id === "theme" ? (isDark ? ICONS.sun : ICONS.moon) : item.icon;
               const hotIndex = label.toLowerCase().indexOf(item.hot);
               const renderedLabel =
@@ -454,9 +607,6 @@ export function bootApp(root: HTMLElement, data: AppData) {
                   : `<div class="editor-empty">Open a file from the file explorer</div>`
               }
             </div>
-            <div class="statusbar">
-              <span>press <kbd>?</kbd> for vim motions help</span>
-            </div>
           </div>
         </div>
       </section>
@@ -522,12 +672,12 @@ export function bootApp(root: HTMLElement, data: AppData) {
             <div>
               <h3>Explorer</h3>
               <ul>
-                <li><kbd>h</kbd>/<kbd>l</kbd> tree ↔ editor</li>
-                <li><kbd>j</kbd>/<kbd>k</kbd> move / scroll</li>
-                <li><kbd>↵</kbd> open file under cursor</li>
+                <li><kbd>h</kbd>/<kbd>l</kbd> files ↔ editor</li>
+                <li><kbd>j</kbd>/<kbd>k</kbd> move lines / files</li>
+                <li><kbd>↵</kbd> open file / link / image, play video</li>
                 <li><kbd>f</kbd> or <kbd>/</kbd> fuzzy find</li>
                 <li><kbd>gt</kbd>/<kbd>gT</kbd> next / prev tab</li>
-                <li><kbd>gg</kbd>/<kbd>G</kbd> top / bottom</li>
+                <li><kbd>gg</kbd>/<kbd>G</kbd> first / last line</li>
                 <li><kbd>ctrl-d</kbd>/<kbd>ctrl-u</kbd> page</li>
                 <li><kbd>x</kbd> close tab · <kbd>q</kbd> menu</li>
               </ul>
@@ -542,6 +692,9 @@ export function bootApp(root: HTMLElement, data: AppData) {
     const main = view === "dashboard" ? renderDashboard() : renderExplorer();
     root.innerHTML = main + renderFinder() + renderHelp();
     bind();
+    if (view === "explorer" && focusPane === "editor") {
+      requestAnimationFrame(() => syncEditorLine());
+    }
   }
 
   function updateFinderResultsOnly() {
@@ -636,12 +789,16 @@ export function bootApp(root: HTMLElement, data: AppData) {
 
     root.querySelector("[data-pane='tree']")?.addEventListener("mousedown", () => {
       focusPane = "tree";
+      for (const el of getEditorLineEls()) el.classList.remove("is-line-active", "has-link");
+      const bar = root.querySelector<HTMLElement>(".line-highlight-bar");
+      if (bar) bar.hidden = true;
       syncFocusChrome();
     });
 
     root.querySelector("[data-pane='editor']")?.addEventListener("mousedown", () => {
       focusPane = "editor";
       syncFocusChrome();
+      syncEditorLine();
     });
 
     const overlay = root.querySelector("#finder-overlay");
@@ -767,17 +924,20 @@ export function bootApp(root: HTMLElement, data: AppData) {
 
     // Pending "g" leader
     if (pendingKey === "g") {
+      if (key === "Shift" || key === "Control" || key === "Alt" || key === "Meta") {
+        return;
+      }
       e.preventDefault();
       const second = key;
       clearPending();
       if (second === "g") {
         focusPane = "editor";
-        scrollEditor("top");
+        editorLineIndex = 0;
         syncFocusChrome();
-      } else if (second === "t") {
-        cycleTab(1);
-      } else if (second === "T") {
-        cycleTab(-1);
+        syncEditorLine();
+        scrollEditor("top");
+      } else if (second.toLowerCase() === "t") {
+        cycleTab(second === "T" || e.shiftKey ? -1 : 1);
       } else {
         syncFocusChrome();
       }
@@ -821,8 +981,10 @@ export function bootApp(root: HTMLElement, data: AppData) {
     if (key === "G") {
       e.preventDefault();
       focusPane = "editor";
-      scrollEditor("bottom");
+      const lines = getEditorLineEls();
+      editorLineIndex = Math.max(0, lines.length - 1);
       syncFocusChrome();
+      syncEditorLine();
       return;
     }
 
@@ -853,6 +1015,9 @@ export function bootApp(root: HTMLElement, data: AppData) {
     if (key === "h" || key === "ArrowLeft") {
       e.preventDefault();
       focusPane = "tree";
+      for (const el of getEditorLineEls()) el.classList.remove("is-line-active", "has-link");
+      const bar = root.querySelector<HTMLElement>(".line-highlight-bar");
+      if (bar) bar.hidden = true;
       if (window.matchMedia("(max-width: 760px)").matches) {
         treeDrawerOpen = true;
         render();
@@ -868,7 +1033,10 @@ export function bootApp(root: HTMLElement, data: AppData) {
       else {
         focusPane = "editor";
         if (treeDrawerOpen) closeTreeDrawer();
-        else syncFocusChrome();
+        else {
+          syncFocusChrome();
+          syncEditorLine();
+        }
       }
       return;
     }
@@ -876,20 +1044,21 @@ export function bootApp(root: HTMLElement, data: AppData) {
     if (key === "Enter") {
       e.preventDefault();
       if (focusPane === "tree") openTreeCursor();
+      else activateEditorLineLink();
       return;
     }
 
     if (key === "j" || key === "ArrowDown") {
       e.preventDefault();
       if (focusPane === "tree") moveTreeCursor(1);
-      else scrollEditor("line", 1);
+      else moveEditorLine(1);
       return;
     }
 
     if (key === "k" || key === "ArrowUp") {
       e.preventDefault();
       if (focusPane === "tree") moveTreeCursor(-1);
-      else scrollEditor("line", -1);
+      else moveEditorLine(-1);
       return;
     }
 
@@ -902,8 +1071,17 @@ export function bootApp(root: HTMLElement, data: AppData) {
   }
 
   const saved = localStorage.getItem(THEME_KEY) as "dark" | "light" | null;
-  if (saved === "light" || saved === "dark") setTheme(saved);
-  else setTheme("dark");
+  if (saved === "light" || saved === "dark") setTheme(saved, true);
+  else setTheme(preferredTheme(), false);
+
+  const media = window.matchMedia("(prefers-color-scheme: light)");
+  const onSchemeChange = () => {
+    if (localStorage.getItem(THEME_KEY) === "light" || localStorage.getItem(THEME_KEY) === "dark") return;
+    setTheme(preferredTheme(), false);
+    if (view === "dashboard") render();
+    else syncFocusChrome();
+  };
+  media.addEventListener("change", onSchemeChange);
 
   window.addEventListener("keydown", onKeydown);
   render();
