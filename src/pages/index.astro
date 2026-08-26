@@ -1,0 +1,54 @@
+---
+import { loadAllContent, buildSearchIndex } from "../lib/content";
+import "../styles/global.css";
+
+const files = loadAllContent();
+const searchIndex = buildSearchIndex(files);
+const payload = {
+  files,
+  searchIndex,
+  pluginCount: files.filter((f) => f.kind === "project").length,
+};
+---
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Rómulo García</title>
+    <meta
+      name="description"
+      content="Portfolio of Rómulo García — software engineer. Browse projects like a file explorer."
+    />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon.ico" sizes="any" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <script is:inline>
+      (() => {
+        try {
+          const t = localStorage.getItem("portfolio-theme");
+          if (t === "light" || t === "dark") {
+            document.documentElement.setAttribute("data-theme", t);
+          }
+        } catch {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script define:vars={{ payload }}>
+      window.__PORTFOLIO__ = payload;
+    </script>
+    <script>
+      import { bootApp } from "../scripts/app";
+      bootApp(document.getElementById("app"), window.__PORTFOLIO__);
+    </script>
+  </body>
+</html>
