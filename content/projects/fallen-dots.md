@@ -1,10 +1,10 @@
 ---
 order: 12
 title: "Fallen Dots"
-description: "Reflex mobile game — catch the dots, dodge the void. Built with GDevelop."
+description: "Reflex mobile game: catch the dots, dodge the void. Built with GDevelop."
 ---
 
-**Fallen Dots** — a simple reflexes game: keep the falling dots alive, avoid the void. Made with **GDevelop**.
+**Fallen Dots**: a simple reflexes game: keep the falling dots alive, avoid the void. Made with **GDevelop**.
 
 ![Fallen Dots](cover.jpg)
 

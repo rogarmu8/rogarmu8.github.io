@@ -1,10 +1,10 @@
 ---
 order: 3
 title: "Kloom Studios"
-description: "Co-founded Smart Target — projector games for axe throwing & darts, live in 7+ countries."
+description: "Co-founded Smart Target: projector games for axe throwing & darts, live in 7+ countries."
 ---
 
-Co-founded **Kloom Studios** — **Smart Target**, a digital gaming system for axe throwing venues and bars. Interactive games are projected onto wooden targets and dartboards; a tablet app runs the session and scores throws automatically.
+Co-founded **Kloom Studios**: **Smart Target**, a digital gaming system for axe throwing venues and bars. Interactive games are projected onto wooden targets and dartboards; a tablet app runs the session and scores throws automatically.
 
 **Role & stack:** Co-founder · solo build · Python, Godot
 
@@ -12,14 +12,14 @@ Co-founded **Kloom Studios** — **Smart Target**, a digital gaming system for a
 
 # How it works
 
-1. **Tablet app** — pick from 20+ games for all skill levels
-2. **Projector** — overlays the game on the physical target or dartboard
-3. **Play** — automatic score tracking, no calibration
+1. **Tablet app**: pick from 20+ games for all skill levels
+2. **Projector**: overlays the game on the physical target or dartboard
+3. **Play**: automatic score tracking, no calibration
 
 # Products
 
-- **Axe throwing** — tic-tac-toe, battleship, trivia, 501, team challenges, tournaments, and more; sessions from 30 minutes to 2 hours
-- **Darts** — classic modes (501, cricket, around the clock, …) on any standard board
+- **Axe throwing**: tic-tac-toe, battleship, trivia, 501, team challenges, tournaments, and more; sessions from 30 minutes to 2 hours
+- **Darts**: classic modes (501, cricket, around the clock, …) on any standard board
 
 # Why venues use it
 

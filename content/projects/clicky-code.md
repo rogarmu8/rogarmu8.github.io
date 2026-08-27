@@ -1,10 +1,10 @@
 ---
 order: 11
 title: "Clicky Code"
-description: "Unity clicker with room decoration — idle progress meets cozy setup."
+description: "Unity clicker with room decoration: idle progress meets cozy setup."
 ---
 
-**Clicky Code** — a clicker with room decoration management. Idle loops plus a place you actually care about dressing up.
+**Clicky Code**: a clicker with room decoration management. Idle loops plus a place you actually care about dressing up.
 
 **Stack:** Unity (C#) · Photoshop · Bosca Ceoil
 

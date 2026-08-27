@@ -1,10 +1,10 @@
 ---
 order: 1
 title: "100 Vibe Coding"
-description: "Co-founded AI coding challenges platform — PH #3 Product of the Day, ~2k MAU."
+description: "Co-founded AI coding challenges platform: PH #3 Product of the Day, ~2k MAU."
 ---
 
-Co-founded **100 Vibe Coding** — an AI-powered platform that teaches people to ship projects through 100 progressive challenges. Focus: prompting well and moving from idea to working build fast.
+Co-founded **100 Vibe Coding**: an AI-powered platform that teaches people to ship projects through 100 progressive challenges. Focus: prompting well and moving from idea to working build fast.
 
 **Role & stack:** Co-founder · TypeScript, Next.js, Supabase
 
@@ -22,7 +22,7 @@ Co-founded **100 Vibe Coding** — an AI-powered platform that teaches people to
 
 # Getting Started
 
-Start with 10 free challenges — no credit card. Learn to use AI as a real building partner, not just a chat toy.
+Start with 10 free challenges, no credit card. Learn to use AI as a real building partner, not just a chat toy.
 
 {{< youtube 2a5PoiZeejo >}}
 

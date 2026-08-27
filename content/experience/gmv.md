@@ -1,12 +1,12 @@
 ---
 order: 2
 title: "GMV"
-description: "AI Team Lead — R&D for European defense, 2023–present."
+description: "AI Team Lead: R&D for European defense, 2023–present."
 ---
 
 **AI Team Lead** at [GMV](https://www.gmv.com) · **2023 – present**
 
-Lead R&D on AI implementations for **European defense** programs — from research prototypes to systems that have to hold up in production.
+Lead R&D on AI implementations for **European defense** programs, from research prototypes to systems that have to hold up in production.
 
 # Focus
 
