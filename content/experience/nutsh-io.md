@@ -6,7 +6,7 @@ description: "Founding engineer — Brain-AI Interface, Dec 2025–present."
 
 **Founding engineer** at [nutsh](https://www.nutsh.io) · **December 2025 – present**
 
-nutsh is building a **Brain-AI Interface**: thought-prompted systems and a discreet everyday wearable so intent reaches AI without living only in text prompts. Less babysitting tools; more control with less attention.
+nutsh is building a **Brain-AI Interface**: thought-prompted systems and a discreet everyday wearable so intent reaches AI without living only in text prompts.
 
 # What I work on
 
