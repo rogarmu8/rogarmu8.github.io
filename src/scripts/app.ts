@@ -6,9 +6,8 @@ export type ContentFile = {
   slug: string;
   title: string;
   description: string;
-  weight: number;
-  date: string | null;
-  kind: "project" | "about";
+  order: number;
+  kind: "project" | "experience" | "about";
   filename: string;
   body: string;
   lines: string[];
@@ -19,6 +18,7 @@ export type SearchRow = {
   fileId: string;
   filename: string;
   title: string;
+  description: string;
   line: number;
   text: string;
 };
@@ -66,8 +66,31 @@ const ICONS = {
 export function bootApp(root: HTMLElement, data: AppData) {
   const filesById = new Map(data.files.map((f) => [f.id, f]));
   const projects = data.files.filter((f) => f.kind === "project");
+  const experience = data.files.filter((f) => f.kind === "experience");
   const about = data.files.find((f) => f.kind === "about");
-  const treeFiles = [...projects, ...(about ? [about] : [])];
+  const treeFiles = [...experience, ...projects, ...(about ? [about] : [])];
+
+  function folderFor(file: ContentFile) {
+    if (file.kind === "about") return "about";
+    if (file.kind === "experience") return "experience";
+    return "projects";
+  }
+
+  function renderTreeGroup(label: string, files: ContentFile[], cursorId: string | undefined) {
+    if (!files.length) return "";
+    return `<div class="tree-group">
+              <div class="tree-folder"><span class="icon">${ICONS.folder}</span><span>${label}</span></div>
+              ${files
+                .map(
+                  (p) => `
+                <button class="tree-file ${activeFileId === p.id ? "is-active" : ""} ${cursorId === p.id ? "is-cursor" : ""}" data-file="${p.id}">
+                  <span class="icon">${ICONS.file}</span>
+                  <span>${escapeHtml(p.filename)}</span>
+                </button>`,
+                )
+                .join("")}
+            </div>`;
+  }
 
   let view: View = "dashboard";
   let selectedMenu = 0;
@@ -88,9 +111,10 @@ export function bootApp(root: HTMLElement, data: AppData) {
 
   const fuse = new Fuse(data.searchIndex, {
     keys: [
-      { name: "text", weight: 0.7 },
+      { name: "text", weight: 0.65 },
       { name: "title", weight: 0.2 },
       { name: "filename", weight: 0.1 },
+      { name: "description", weight: 0.05 },
     ],
     threshold: 0.35,
     ignoreLocation: true,
@@ -160,7 +184,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
     helpOpen = false;
     treeDrawerOpen = false;
     clearPending();
-    const target = fileId ?? projects[0]?.id ?? about?.id ?? null;
+    const target = fileId ?? experience[0]?.id ?? projects[0]?.id ?? about?.id ?? null;
     openFile(target, { focus: "editor" });
     render();
   }
@@ -345,6 +369,22 @@ export function bootApp(root: HTMLElement, data: AppData) {
     return true;
   }
 
+  function resolveNoteHref(href: string): string | null {
+    const raw = href.trim().replace(/^\.\//, "");
+    const match = raw.match(/^(?:~\/|\/)?(experience|projects|about)\/([^/#?]+?)(?:\.md)?\/?$/i);
+    if (!match) return null;
+    const id = match[2]!.replace(/\.md$/i, "");
+    return filesById.has(id) ? id : null;
+  }
+
+  function openNoteLink(href: string): boolean {
+    const id = resolveNoteHref(href);
+    if (!id) return false;
+    openFile(id, { focus: "editor" });
+    render();
+    return true;
+  }
+
   function activateEditorLineLink() {
     const lines = getEditorLineEls();
     const active = lines[editorLineIndex];
@@ -369,6 +409,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
         root.querySelector(href)?.scrollIntoView({ behavior: "smooth", block: "start" });
         return true;
       }
+      if (openNoteLink(href)) return true;
       if (/^https?:\/\//i.test(link.href) || link.host !== window.location.host) {
         window.open(link.href, "_blank", "noopener,noreferrer");
       } else {
@@ -517,7 +558,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
         <div class="logo">
           <pre class="logo-art">${logoArt()}</pre>
           <p class="logo-word">ROMULO</p>
-          <p class="logo-sub">Rómulo García — software engineer</p>
+          <p class="logo-sub">Rómulo García — builder, Madrid</p>
         </div>
         <nav class="menu" role="menu" aria-label="Main menu">
           ${menu
@@ -561,7 +602,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
           <button class="topbar-btn" data-action="fuzzy" title="Fuzzy find (f)">${ICONS.search} find</button>
           <div class="topbar-path">${
             file
-              ? `~/${file.kind === "about" ? "about" : "projects"}/<strong>${escapeHtml(file.filename)}</strong>`
+              ? `~/${folderFor(file)}/<strong>${escapeHtml(file.filename)}</strong>`
               : "~/"
           }</div>
           <button class="topbar-btn topbar-help" data-action="help" title="Keybindings (?)">?</button>
@@ -570,29 +611,9 @@ export function bootApp(root: HTMLElement, data: AppData) {
           <div class="tree-backdrop" data-action="close-drawer"${treeDrawerOpen ? "" : " hidden"}></div>
           <aside class="tree ${focusPane === "tree" ? "is-focused" : ""} ${treeDrawerOpen ? "is-open" : ""}" aria-label="File tree" data-pane="tree">
             <div class="tree-title"><span>FILES</span></div>
-            <div class="tree-group">
-              <div class="tree-folder"><span class="icon">${ICONS.folder}</span><span>projects</span></div>
-              ${projects
-                .map(
-                  (p) => `
-                <button class="tree-file ${activeFileId === p.id ? "is-active" : ""} ${cursorId === p.id ? "is-cursor" : ""}" data-file="${p.id}">
-                  <span class="icon">${ICONS.file}</span>
-                  <span>${escapeHtml(p.filename)}</span>
-                </button>`,
-                )
-                .join("")}
-            </div>
-            ${
-              about
-                ? `<div class="tree-group">
-              <div class="tree-folder"><span class="icon">${ICONS.folder}</span><span>about</span></div>
-              <button class="tree-file ${activeFileId === about.id ? "is-active" : ""} ${cursorId === about.id ? "is-cursor" : ""}" data-file="${about.id}">
-                <span class="icon">${ICONS.file}</span>
-                <span>${escapeHtml(about.filename)}</span>
-              </button>
-            </div>`
-                : ""
-            }
+            ${renderTreeGroup("experience", experience, cursorId)}
+            ${renderTreeGroup("projects", projects, cursorId)}
+            ${renderTreeGroup("about", about ? [about] : [], cursorId)}
           </aside>
           <div class="editor ${focusPane === "editor" ? "is-focused" : ""}" data-pane="editor">
             <div class="tabs" role="tablist" aria-label="Open files">
@@ -641,7 +662,7 @@ export function bootApp(root: HTMLElement, data: AppData) {
         <div class="finder">
           <div class="finder-input-wrap">
             <span class="finder-prompt">${ICONS.search}</span>
-            <input id="finder-input" class="finder-input" type="text" placeholder="Search across projects…" value="${escapeAttr(finderQuery)}" autocomplete="off" spellcheck="false" />
+            <input id="finder-input" class="finder-input" type="text" placeholder="Search files…" value="${escapeAttr(finderQuery)}" autocomplete="off" spellcheck="false" />
             <span class="finder-meta">${count} matches</span>
           </div>
           <div class="finder-results" id="finder-results">
@@ -818,6 +839,17 @@ export function bootApp(root: HTMLElement, data: AppData) {
       focusPane = "editor";
       syncFocusChrome();
       syncEditorLine();
+    });
+
+    root.querySelector(".editor-body")?.addEventListener("click", (e) => {
+      const target = e.target;
+      if (!(target instanceof Element)) return;
+      const link = target.closest("a[href]");
+      if (!(link instanceof HTMLAnchorElement)) return;
+      const href = link.getAttribute("href")?.trim() ?? "";
+      if (!resolveNoteHref(href)) return;
+      e.preventDefault();
+      openNoteLink(href);
     });
 
     const overlay = root.querySelector("#finder-overlay");

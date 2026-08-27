@@ -483,6 +483,8 @@ a {
   overflow-x: hidden;
   overflow-wrap: anywhere;
   word-break: break-word;
+  padding-bottom: 4.5rem;
+  padding-bottom: 3lh;
 }
 
 .md > *:first-child {

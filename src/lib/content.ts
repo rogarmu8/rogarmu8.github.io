@@ -2,14 +2,15 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 
+export type ContentKind = "project" | "experience" | "about";
+
 export type ContentFile = {
   id: string;
   slug: string;
   title: string;
   description: string;
-  weight: number;
-  date: string | null;
-  kind: "project" | "about";
+  order: number;
+  kind: ContentKind;
   filename: string;
   body: string;
   lines: string[];
@@ -17,6 +18,12 @@ export type ContentFile = {
 };
 
 const ROOT = process.cwd();
+
+const KIND_ORDER: Record<ContentKind, number> = {
+  experience: 0,
+  project: 1,
+  about: 2,
+};
 
 function stripHugoShortcodes(body: string): string {
   return body
@@ -34,30 +41,28 @@ function rewriteRelativeAssets(body: string, assetBase: string): string {
       (_m, alt, src) => `![${alt}](${assetBase}/${src.replace(/^\.\//, "")})`,
     )
     .replace(
-      /\[([^\]]+)\]\((?!https?:|\/|#|mailto:)([^)]+)\)/g,
+      /\[([^\]]+)\]\((?!https?:|\/|#|mailto:|~\/)([^)]+)\)/g,
       (_m, text, href) => `[${text}](${assetBase}/${href.replace(/^\.\//, "")})`,
     );
 }
 
 function loadMarkdownFile(
   filePath: string,
-  meta: { id: string; kind: "project" | "about"; assetBase: string; filename: string; weight?: number },
+  meta: { id: string; kind: ContentKind; assetBase: string; filename: string; order?: number },
 ): ContentFile {
   const raw = fs.readFileSync(filePath, "utf8");
   const { data, content } = matter(raw);
   const body = rewriteRelativeAssets(stripHugoShortcodes(content.trim()), meta.assetBase);
   const title = String(data.title ?? meta.id);
-  const description = String(data.description ?? data.subtitle ?? "");
-  const weight = Number(data.weight ?? meta.weight ?? 99);
-  const date = data.date ? new Date(data.date).toISOString() : null;
+  const description = String(data.description ?? "");
+  const order = Number(data.order ?? meta.order ?? 99);
 
   return {
     id: meta.id,
     slug: meta.id,
     title,
     description,
-    weight,
-    date,
+    order,
     kind: meta.kind,
     filename: meta.filename,
     body,
@@ -66,8 +71,29 @@ function loadMarkdownFile(
   };
 }
 
+function loadFlatMarkdownDir(dir: string, kind: ContentKind, assetRoot: string) {
+  const files: ContentFile[] = [];
+  if (!fs.existsSync(dir)) return files;
+  for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+    if (!entry.isFile() || !entry.name.endsWith(".md")) continue;
+    const slug = entry.name.replace(/\.md$/, "");
+    files.push(
+      loadMarkdownFile(path.join(dir, entry.name), {
+        id: slug,
+        kind,
+        assetBase: `${assetRoot}/${slug}`,
+        filename: entry.name,
+      }),
+    );
+  }
+  return files;
+}
+
 export function loadAllContent(): ContentFile[] {
   const files: ContentFile[] = [];
+
+  files.push(...loadFlatMarkdownDir(path.join(ROOT, "content/projects"), "project", "/projects"));
+  files.push(...loadFlatMarkdownDir(path.join(ROOT, "content/experience"), "experience", "/experience"));
 
   const aboutPath = path.join(ROOT, "content/about/about-me.md");
   if (fs.existsSync(aboutPath)) {
@@ -77,29 +103,17 @@ export function loadAllContent(): ContentFile[] {
         kind: "about",
         assetBase: "/about",
         filename: "about-me.md",
-        weight: 0,
+        order: 0,
       }),
     );
   }
 
-  const projectsDir = path.join(ROOT, "content/projects");
-  if (fs.existsSync(projectsDir)) {
-    for (const entry of fs.readdirSync(projectsDir, { withFileTypes: true })) {
-      if (!entry.isDirectory()) continue;
-      const indexPath = path.join(projectsDir, entry.name, "index.md");
-      if (!fs.existsSync(indexPath)) continue;
-      files.push(
-        loadMarkdownFile(indexPath, {
-          id: entry.name,
-          kind: "project",
-          assetBase: `/projects/${entry.name}`,
-          filename: `${entry.name}.md`,
-        }),
-      );
-    }
-  }
-
-  return files.sort((a, b) => a.weight - b.weight || a.title.localeCompare(b.title));
+  return files.sort(
+    (a, b) =>
+      KIND_ORDER[a.kind] - KIND_ORDER[b.kind] ||
+      a.order - b.order ||
+      a.title.localeCompare(b.title),
+  );
 }
 
 function isSearchableLine(text: string): boolean {
@@ -112,15 +126,28 @@ function isSearchableLine(text: string): boolean {
 }
 
 export function buildSearchIndex(files: ContentFile[]) {
-  return files.flatMap((file) =>
-    file.lines
+  return files.flatMap((file) => {
+    const lineRows = file.lines
       .map((text, index) => ({
         fileId: file.id,
         filename: file.filename,
         title: file.title,
+        description: file.description,
         line: index + 1,
         text,
       }))
-      .filter((row) => isSearchableLine(row.text)),
-  );
+      .filter((row) => isSearchableLine(row.text));
+
+    if (file.description.trim()) {
+      lineRows.unshift({
+        fileId: file.id,
+        filename: file.filename,
+        title: file.title,
+        description: file.description,
+        line: 0,
+        text: file.description,
+      });
+    }
+    return lineRows;
+  });
 }
